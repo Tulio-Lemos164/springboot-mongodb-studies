@@ -5,6 +5,7 @@ import br.com.studiesMongoDB.dto.UserDTO;
 import br.com.studiesMongoDB.repositories.UserRepository;
 import br.com.studiesMongoDB.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -28,6 +29,11 @@ public class UserService {
 
     public User insert(User user){
         return userRepository.insert(user);
+    }
+
+    public void delete(String id){
+        findById(id);
+        userRepository.deleteById(id);
     }
 
     public User fromDTO(UserDTO userDTO){
