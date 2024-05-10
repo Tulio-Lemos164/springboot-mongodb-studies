@@ -1,6 +1,7 @@
 package br.com.studiesMongoDB.resources;
 
 import br.com.studiesMongoDB.domain.Post;
+import br.com.studiesMongoDB.resources.util.URL;
 import br.com.studiesMongoDB.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,5 +23,12 @@ public class PostResource {
     public ResponseEntity<Post> findById(@PathVariable String id){
         Post post = postService.findById(id);
         return ResponseEntity.ok().body(post);
+    }
+
+    @GetMapping(value = "/titlesearch")
+    public ResponseEntity<List<Post>> findByTitle(@RequestParam(value = "text", defaultValue = "") String text){
+        text = URL.decodeParam(text);
+        List<Post> posts = postService.findByTitle(text);
+        return ResponseEntity.ok().body(posts);
     }
 }
